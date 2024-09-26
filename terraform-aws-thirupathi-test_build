@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_CREDENTIALS = credentials('aws_secret_and_access') // Jenkins credentials ID for AWS
+        AWS_CREDENTIALS = credentials('aws_cred') // Jenkins credentials ID for AWS
         TF_IN_AUTOMATION = 'true' // Specifies that Terraform runs in automation mode
         SLACK_CREDENTIALS = credentials('slack-webhook') // Jenkins credentials ID for Slack token
     }
