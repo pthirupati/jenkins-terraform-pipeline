@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        AWS_CREDENTIALS = credentials('aws_secret_and_access') // Jenkins credentials ID for AWS
+        AWS_CREDENTIALS = credentials('aws_cred') // Jenkins credentials ID for AWS
         TF_IN_AUTOMATION = 'true' // Specifies that Terraform runs in automation mode
+        GITHUB_CREDENTIALS = credentials('pthirupati') // Jenkins credentials ID for private GitHub access
         SLACK_CREDENTIALS = credentials('slack-webhook') // Jenkins credentials ID for Slack token
     }
 
@@ -21,6 +22,13 @@ pipeline {
                 }
             }
         }
+
+        stage('Checkout Pipeline Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/pthirupati/jenkins-terraform-pipeline.git', credentialsId: 'pthirupati'
+            }
+        }
+
 
         stage('Checkout') {
             steps {
